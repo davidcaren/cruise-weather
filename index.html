@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Brilliant Lady Voyage Weather</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: a voyage log — illustrated sunset hero, route strip, then one illustrated entry per day, today highlighted */
+:root {
+  --bg: #eef3f5;
+  --surface: #ffffff;
+  --ink: #10253a;
+  --muted: #5a6b7a;
+  --line: #d3dde3;
+  --accent: #0b7480;
+  --accent-soft: #d6eef0;
+  --warn: #b26a00;
+  --warn-soft: #fbecd2;
+  --alert: #b83a2e;
+  --alert-soft: #f8dcd8;
+  /* illustration */
+  --sky1: #ffd9a8; --sky2: #f39a7b; --sky3: #8a6fb3;
+  --sun: #fff2cf; --sea1: #2f7f9e; --sea2: #1d5f7d; --sea3: #13465e;
+  --hull: #f8fafb; --hullline: #10253a; --glass: #284d66; --land: #3c6e57; --rock: #a87b5a; --sand: #e9d3a6; --tile: #dcebf0; --tile-sky: #bfe2ec;
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --body: "Public Sans", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1622; --surface: #12212f; --ink: #e4edf2; --muted: #93a6b5; --line: #24384a;
+    --accent: #4fc3cc; --accent-soft: #123a42; --warn: #f0b14a; --warn-soft: #3a2a10;
+    --alert: #f08a7e; --alert-soft: #3d1c19;
+    --sky1: #3a2f5c; --sky2: #8a4f6e; --sky3: #141b38; --sun: #ffc98a; --sea1: #17465e; --sea2: #0f3347; --sea3: #0a2433;
+    --hull: #dfe7ec; --hullline: #0b1622; --glass: #29465c; --land: #2d5645; --rock: #8a6448; --sand: #b8a079; --tile: #183042; --tile-sky: #1f3e52;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1622; --surface: #12212f; --ink: #e4edf2; --muted: #93a6b5; --line: #24384a;
+  --accent: #4fc3cc; --accent-soft: #123a42; --warn: #f0b14a; --warn-soft: #3a2a10;
+  --alert: #f08a7e; --alert-soft: #3d1c19;
+  --sky1: #3a2f5c; --sky2: #8a4f6e; --sky3: #141b38; --sun: #ffc98a; --sea1: #17465e; --sea2: #0f3347; --sea3: #0a2433;
+  --hull: #dfe7ec; --hullline: #0b1622; --glass: #29465c; --land: #2d5645; --rock: #8a6448; --sand: #b8a079; --tile: #183042; --tile-sky: #1f3e52;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.45; }
+.wrap { max-width: 760px; margin: 0 auto; padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 22px; }
+
+.hero { border-radius: 14px; overflow: hidden; position: relative; background: var(--sea2); }
+.hero svg { display: block; width: 100%; height: auto; }
+.waves1, .waves2 { animation: drift 14s linear infinite; }
+.waves2 { animation-duration: 22s; animation-direction: reverse; }
+.shipbob { animation: bob 6s ease-in-out infinite; transform-origin: 420px 190px; }
+@keyframes drift { from { transform: translateX(0) } to { transform: translateX(-200px) } }
+@keyframes bob { 0%,100% { transform: translateY(0) rotate(0deg) } 50% { transform: translateY(2px) rotate(.4deg) } }
+@media (prefers-reduced-motion: reduce) { .waves1, .waves2, .shipbob { animation: none; } }
+
+header { display: grid; gap: 8px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--display); font-stretch: 72%; font-weight: 800; font-size: clamp(34px, 9vw, 56px); line-height: .95; margin: 0; text-wrap: balance; text-transform: uppercase; letter-spacing: -.01em; }
+.route { font-family: var(--display); font-stretch: 90%; font-weight: 600; font-size: 17px; color: var(--muted); }
+.meta { font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.meta b { color: var(--ink); font-weight: 600; }
+.shiplink { color: var(--accent); font-weight: 600; text-decoration: none; }
+.shiplink:hover, .shiplink:focus-visible { text-decoration: underline; }
+
+.strip { overflow-x: auto; margin: 0 -4px; padding: 4px; }
+.strip ol { list-style: none; margin: 0; padding: 0; display: flex; gap: 0; min-width: max-content; align-items: flex-start; }
+.strip li { display: grid; justify-items: center; gap: 4px; width: 78px; position: relative; }
+.strip li::before { content: ""; position: absolute; top: 21px; left: -39px; width: 78px; height: 2px; background: repeating-linear-gradient(90deg, var(--accent) 0 5px, transparent 5px 9px); opacity: .6; }
+.strip li:first-child::before { display: none; }
+.strip svg { width: 44px; height: 44px; border-radius: 50%; position: relative; z-index: 1; box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--line); }
+.strip span { font-family: var(--display); font-stretch: 85%; font-weight: 600; font-size: 12px; text-align: center; line-height: 1.15; }
+.strip small { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+
+.alerts { display: grid; gap: 8px; }
+.alert { background: var(--warn-soft); border-left: 4px solid var(--warn); padding: 10px 12px; border-radius: 4px; font-size: 14px; }
+.alert strong { color: var(--warn); }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+ol.log { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.day { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; grid-template-columns: 64px minmax(0,1fr) 76px; gap: 4px 14px; }
+.day.past { opacity: .5; }
+.day.today { border: 2px solid var(--accent); box-shadow: 0 2px 14px color-mix(in srgb, var(--accent) 22%, transparent); }
+.date { grid-column: 1; grid-row: 1 / span 3; display: grid; align-content: start; justify-items: start; gap: 2px; }
+.pic { grid-column: 3; grid-row: 1 / span 3; width: 76px; height: 76px; border-radius: 10px; }
+.top, .note, .stats { grid-column: 2; }
+.dnum { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .05em; }
+.dd { font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
+.dm { font-family: var(--display); font-stretch: 85%; font-weight: 600; font-size: 13px; text-transform: uppercase; color: var(--muted); }
+.top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; min-width: 0; }
+.place { font-family: var(--display); font-stretch: 88%; font-weight: 700; font-size: 19px; line-height: 1.15; }
+.chip { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; padding: 2px 7px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+.chip.sea { background: transparent; border: 1px solid var(--line); color: var(--muted); }
+.chip.today { background: var(--accent); color: var(--surface); }
+.note { font-size: 13px; color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; margin-top: 6px; }
+.stat { display: grid; gap: 2px; min-width: 0; }
+.lab { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.val { font-weight: 600; font-size: 14px; }
+.sub { font-size: 12.5px; color: var(--muted); }
+.bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin-top: 3px; }
+.bar i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+.bar i.mod { background: var(--warn); }
+.bar i.rough { background: var(--alert); }
+.foot { grid-column: 2 / -1; display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin-top: 4px; }
+.src { font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; }
+.src.fc { color: var(--accent); }
+.src.ty { color: var(--muted); }
+.flag { font-size: 12.5px; color: var(--alert); font-weight: 600; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
+
+/* illustration fills */
+.f-sky { fill: var(--tile-sky); } .f-tile { fill: var(--tile); } .f-sea { fill: var(--sea1); } .f-sea2 { fill: var(--sea2); }
+.f-land { fill: var(--land); } .f-rock { fill: var(--rock); } .f-sand { fill: var(--sand); } .f-sun { fill: var(--sun); }
+.f-hull { fill: var(--hull); } .f-ink { fill: var(--hullline); } .f-glass { fill: var(--glass); } .f-acc { fill: var(--accent); } .f-warm { fill: var(--sky2); }
+.s-hull { stroke: var(--hull); } .s-ink { stroke: var(--hullline); } .s-sea { stroke: var(--sea1); } .s-land { stroke: var(--land); } .s-acc { stroke: var(--accent); }
+
+@media (max-width: 520px) {
+  .day { grid-template-columns: minmax(0,1fr) 60px; }
+  .date { grid-column: 1; grid-row: 1; display: flex; align-items: baseline; gap: 8px; }
+  .pic { grid-column: 2; grid-row: 1 / span 3; width: 60px; height: 60px; }
+  .top, .note { grid-column: 1; }
+  .stats { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; }
+  .stat.wx { grid-column: span 2; }
+  .dd { font-size: 22px; }
+  .foot { grid-column: 1 / -1; }
+}
+</style>
+
+<!-- Illustration sprite: one original vignette per kind of stop -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="v-la" viewBox="0 0 64 64">
+      <rect width="64" height="64" class="f-sky"/>
+      <circle cx="44" cy="24" r="9" class="f-sun"/>
+      <path d="M0 44 Q14 30 26 38 T52 34 T64 36 V64 H0Z" class="f-land" opacity=".55"/>
+      <rect y="46" width="64" height="18" class="f-sea"/>
+      <path d="M17 46 L18 22" class="s-ink" stroke-width="1.6" fill="none"/>
+      <path d="M18 22 q-8 -1 -11 5 M18 22 q8 -2 11 4 M18 22 q-3 -6 -9 -6 M18 22 q4 -6 10 -5" class="s-land" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M27 46 L27.6 30" class="s-ink" stroke-width="1.3" fill="none"/>
+      <path d="M27.6 30 q-6 0 -8 4 M27.6 30 q6 -1 8 3 M27.6 30 q-2 -5 -7 -4" class="s-land" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="v-sea" viewBox="0 0 64 64">
+      <rect width="64" height="64" class="f-sky"/>
+      <circle cx="46" cy="20" r="7" class="f-sun"/>
+      <rect y="34" width="64" height="30" class="f-sea"/>
+      <path d="M0 40 q8 -5 16 0 t16 0 t16 0 t16 0" class="s-hull" stroke-width="2" fill="none" opacity=".7"/>
+      <path d="M0 50 q8 -5 16 0 t16 0 t16 0 t16 0" class="s-hull" stroke-width="2" fill="none" opacity=".5"/>
+      <path d="M8 31 h20 l-3 4 h-15z" class="f-hull"/><rect x="12" y="27" width="11" height="4" class="f-hull"/>
+    </symbol>
+    <symbol id="v-wind" viewBox="0 0 64 64">
+      <rect width="64" height="64" class="f-sky"/>
+      <path d="M6 14 h30 q6 0 6 -5 M10 22 h40 q6 0 6 5 M4 30 h24" class="s-ink" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".55"/>
+      <rect y="36" width="64" height="28" class="f-sea2"/>
+      <path d="M0 44 l8 -7 l8 7 l8 -9 l8 9 l8 -7 l8 7 l8 -9 l8 9" class="s-hull" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+      <path d="M0 56 l8 -6 l8 6 l8 -7 l8 7 l8 -6 l8 6 l8 -7 l8 7" class="s-hull" stroke-width="2" fill="none" opacity=".6" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="v-cabo" viewBox="0 0 64 64">
+      <rect width="64" height="64" class="f-sky"/>
+      <circle cx="14" cy="16" r="7" class="f-sun"/>
+      <path d="M22 50 L26 24 Q32 14 40 18 L48 28 L52 50 H45 L42 36 Q37 30 32 36 L30 50Z" class="f-rock"/>
+      <rect y="48" width="64" height="16" class="f-sea"/>
+      <path d="M0 54 q8 -4 16 0 t16 0 t16 0 t16 0" class="s-hull" stroke-width="1.8" fill="none" opacity=".6"/>
+    </symbol>
+    <symbol id="v-volcano" viewBox="0 0 64 64">
+      <rect width="64" height="64" class="f-sky"/>
+      <path d="M30 10 q-4 -4 2 -6 q6 -3 8 2 q6 -1 5 4 q-2 4 -8 2 q-3 3 -7 -2z" class="f-tile" opacity=".9"/>
+      <path d="M4 50 L26 18 h10 L60 50Z" class="f-land"/>
+      <path d="M26 18 h10 l4 6 q-4 3 -9 0 q-5 3 -9 0z" class="f-rock"/>
+      <rect y="48" width="64" height="16" class="f-sea"/>
+    </symbol>
+    <symbol id="v-beach" viewBox="0 0 64 64">
+      <rect width="64" height="64" class="f-sky"/>
+      <circle cx="48" cy="18" r="8" class="f-sun"/>
+      <path d="M0 50 Q30 40 64 46 V64 H0Z" class="f-sand"/>
+      <path d="M0 54 Q30 46 64 52 V64 H0Z" class="f-sea" opacity=".85"/>
+      <path d="M22 46 Q20 30 26 18" class="s-ink" stroke-width="1.8" fill="none"/>
+      <path d="M26 18 q-10 0 -13 6 M26 18 q9 -2 13 4 M26 18 q-4 -7 -11 -7 M26 18 q4 -7 12 -6 M26 18 q0 -8 2 -9" class="s-land" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="v-city" viewBox="0 0 64 64">
+      <rect width="64" height="64" class="f-sky"/>
+      <rect x="6" y="26" width="8" height="24" class="f-glass"/><rect x="16" y="14" width="7" height="36" class="f-glass"/>
+      <path d="M25 50 V20 L30 12 L35 20 V50Z" class="f-glass"/><rect x="37" y="22" width="8" height="28" class="f-glass"/>
+      <rect x="47" y="30" width="10" height="20" class="f-glass"/>
+      <path d="M17 18 v30 M20 18 v30 M40 26 v22" class="s-hull" stroke-width=".8" opacity=".5"/>
+      <rect y="48" width="64" height="16" class="f-sea"/>
+    </symbol>
+    <symbol id="v-canal" viewBox="0 0 64 64">
+      <rect width="64" height="64" class="f-sky"/>
+      <path d="M0 30 Q16 22 32 28 T64 26 V40 H0Z" class="f-land"/>
+      <rect x="0" y="38" width="64" height="26" class="f-tile"/>
+      <rect x="6" y="42" width="52" height="16" class="f-sea"/>
+      <rect x="6" y="40" width="3" height="20" class="f-ink"/><rect x="55" y="40" width="3" height="20" class="f-ink"/>
+      <path d="M14 44 h34 l-3 5 h-28z" class="f-hull"/><rect x="18" y="39" width="22" height="5" class="f-hull"/><rect x="22" y="35" width="13" height="4" class="f-hull"/>
+      <path d="M19 41 h20" class="s-ink" stroke-width="1" stroke-dasharray="2 2"/>
+    </symbol>
+    <symbol id="v-cartagena" viewBox="0 0 64 64">
+      <rect width="64" height="64" class="f-sky"/>
+      <rect x="4" y="30" width="16" height="22" class="f-warm"/><rect x="44" y="28" width="16" height="24" class="f-sand"/>
+      <path d="M22 52 V24 h20 v28 h-6 v-10 a4 4 0 0 0 -8 0 v10z" class="f-sand"/>
+      <rect x="27" y="10" width="10" height="14" class="f-sand"/><path d="M26 10 L32 3 L38 10Z" class="f-warm"/>
+      <circle cx="32" cy="17" r="3" class="f-hull"/>
+      <rect x="7" y="34" width="4" height="5" class="f-hull"/><rect x="13" y="34" width="4" height="5" class="f-hull"/>
+      <path d="M44 34 h16" class="s-land" stroke-width="2.5"/>
+      <rect y="52" width="64" height="12" class="f-rock"/>
+    </symbol>
+    <symbol id="v-caribbean" viewBox="0 0 64 64">
+      <rect width="64" height="64" class="f-sky"/>
+      <circle cx="18" cy="18" r="9" class="f-sun"/>
+      <rect y="38" width="64" height="26" class="f-acc" opacity=".75"/>
+      <path d="M34 40 Q46 30 58 40Z" class="f-sand"/>
+      <path d="M46 34 Q45 26 49 20" class="s-ink" stroke-width="1.4" fill="none"/>
+      <path d="M49 20 q-7 0 -9 4 M49 20 q7 -1 9 3 M49 20 q-3 -5 -8 -4" class="s-land" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <path d="M0 48 q8 -3 16 0 t16 0 t16 0 t16 0" class="s-hull" stroke-width="1.8" fill="none" opacity=".6"/>
+    </symbol>
+    <symbol id="v-miami" viewBox="0 0 64 64">
+      <rect width="64" height="64" class="f-sky"/>
+      <circle cx="50" cy="16" r="7" class="f-sun"/>
+      <rect x="22" y="22" width="9" height="28" class="f-glass"/><rect x="33" y="14" width="8" height="36" class="f-glass"/><rect x="43" y="26" width="10" height="24" class="f-glass"/>
+      <rect x="4" y="36" width="16" height="14" class="f-warm" opacity=".8"/><rect x="4" y="34" width="16" height="3" class="f-hull"/>
+      <path d="M58 50 Q57 36 60 28" class="s-ink" stroke-width="1.4" fill="none"/>
+      <path d="M60 28 q-7 0 -9 4 M60 28 q5 -3 4 0" class="s-land" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <rect y="50" width="64" height="14" class="f-sea"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <div class="hero" role="img" aria-label="Illustration of a cruise ship sailing at sunset">
+    <svg viewBox="0 0 800 280" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" style="stop-color:var(--sky3)"/>
+          <stop offset=".55" style="stop-color:var(--sky2)"/>
+          <stop offset="1" style="stop-color:var(--sky1)"/>
+        </linearGradient>
+      </defs>
+      <rect width="800" height="200" fill="url(#sky)"/>
+      <circle cx="610" cy="176" r="46" class="f-sun"/>
+      <path d="M520 196 Q560 186 600 194 T690 192" class="s-hull" stroke-width="2" fill="none" opacity=".35"/>
+      <g fill="none" class="s-ink" stroke-width="2" opacity=".35" stroke-linecap="round">
+        <path d="M120 70 q6 -6 12 0 q6 -6 12 0"/><path d="M165 52 q4 -4 8 0 q4 -4 8 0"/>
+      </g>
+      <rect y="194" width="800" height="86" class="f-sea"/>
+      <g class="shipbob">
+        <path d="M188 166 L640 166 Q632 184 612 202 L228 202 Q204 188 188 166Z" class="f-hull"/>
+        <path d="M200 182 L630 182" class="s-ink" stroke-width="2"/>
+        <path d="M222 196 L616 196" class="s-acc" stroke-width="4"/>
+        <rect x="232" y="146" width="380" height="20" rx="3" class="f-hull"/>
+        <rect x="250" y="128" width="346" height="18" rx="3" class="f-hull"/>
+        <rect x="270" y="110" width="310" height="18" rx="3" class="f-hull"/>
+        <rect x="298" y="93" width="262" height="17" rx="3" class="f-hull"/>
+        <path d="M520 93 L560 93 L566 76 L524 80Z" class="f-hull"/>
+        <rect x="380" y="78" width="96" height="15" rx="6" class="f-hull"/>
+        <path d="M240 156 H604 M258 137 H588 M278 119 H572 M306 101 H552" class="s-ink" stroke-width="5" stroke-dasharray="7 4" opacity=".75"/>
+        <path d="M528 84 L562 82" class="f-glass s-ink" stroke-width="4"/>
+        <path d="M430 78 L430 58 M422 66 L438 66" class="s-ink" stroke-width="2.5"/>
+      </g>
+      <g class="waves2" opacity=".55">
+        <path d="M0 214 q25 -8 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V280 H0Z" class="f-sea2"/>
+      </g>
+      <g class="waves1">
+        <path d="M0 240 q25 -9 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V280 H0Z" style="fill:var(--sea3)"/>
+      </g>
+    </svg>
+  </div>
+
+  <header>
+    <div class="eyebrow">Virgin Voyages · Brilliant Lady</div>
+    <h1>Voyage Weather</h1>
+    <div class="route">Los Angeles → Panama Canal → Miami · Oct 29 – Nov 15, 2026</div>
+    <div class="meta"><span>Updated <b id="updated"></b></span><span id="status"></span><a class="shiplink" href="https://media.cntraveler.com/photos/68e0233664b87ce0e5ef7843/16:9/w_2560,c_limit/brilliant%20lady-virgin%20voyages-DJI_0693%20(1).JPG" target="_blank" rel="noopener">📷 See a photo of the ship</a></div>
+  </header>
+
+  <nav class="strip" aria-label="Ports of call"><ol id="strip"></ol></nav>
+
+  <div class="alerts" id="alerts"></div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:var(--accent)"></i>Slight seas (under 4 ft)</span>
+    <span><i class="dot" style="background:var(--warn)"></i>Moderate (4–8 ft)</span>
+    <span><i class="dot" style="background:var(--alert)"></i>Rough (8 ft+)</span>
+  </div>
+
+  <ol class="log" id="log"></ol>
+
+  <footer>
+    <div><b>Forecast</b> rows come from current NOAA / NHC marine forecasts. <b>Typical</b> rows show normal early-November conditions until the real forecast comes into range; they're updated each morning.</div>
+    <div>Wind in knots (1 kt ≈ 1.15 mph). Seas are combined wave height. Illustrations are original artwork, not photos.</div>
+  </footer>
+</div>
+
+<script id="data" type="application/json">
+{
+  "updated": "Tue Oct 27, 8:30am PT",
+  "alerts": [
+    {"title": "Tropical Storm Vance", "text": "Weakening off southwest Mexico. Should be gone before the ship passes on Nov 2, but leftover swell may make that sea day lumpy."},
+    {"title": "Gulf of Tehuantepec (Nov 4)", "text": "November is peak season for gap-wind gales here. The most likely bumpy day of the trip."}
+  ],
+  "days": [
+    {"date":"2026-10-29","place":"Los Angeles","kind":"port","img":"la","note":"Departs this evening","wx":"Low 70s, partly cloudy","wind":"Light → SW 5–10","seas":[2,3],"swell":"SW 2 ft @ 15s","src":"forecast"},
+    {"date":"2026-10-30","place":"Off northern Baja","kind":"sea","img":"sea","note":"Sea day","wx":"~70°F, slight chance of showers","wind":"W 5–10","seas":[2,4],"swell":"NW swell may build late","src":"forecast"},
+    {"date":"2026-10-31","place":"Off central / southern Baja","kind":"sea","img":"sea","note":"Sea day","wx":"Low 80s, sunny","wind":"NW 10–15","seas":[4,6],"swell":"NW swell","src":"typical"},
+    {"date":"2026-11-01","place":"Cabo San Lucas","kind":"port","img":"cabo","note":"Arrive 3pm · tender port","wx":"87° / 76°, mostly sunny","wind":"Light to moderate","seas":[2,4],"swell":"Watch for S swell","src":"forecast"},
+    {"date":"2026-11-02","place":"Off Puerto Vallarta","kind":"sea","img":"sea","note":"Sea day","wx":"~86°F, a few showers","wind":"Moderate","seas":[4,7],"swell":"Leftover SW swell from Vance","src":"typical","flag":"Post-storm swell"},
+    {"date":"2026-11-03","place":"Off Acapulco","kind":"sea","img":"sea","note":"Sea day","wx":"~88°F, humid, showers possible","wind":"Light to moderate","seas":[4,6],"swell":"S swell","src":"typical"},
+    {"date":"2026-11-04","place":"Gulf of Tehuantepec","kind":"sea","img":"wind","note":"Sea day","wx":"~85°F","wind":"N 20–35 possible","seas":[6,12],"swell":"If gap winds blow","src":"typical","flag":"Gale risk"},
+    {"date":"2026-11-05","place":"Puerto Quetzal, Guatemala","kind":"port","img":"volcano","note":"Arrive 2pm","wx":"~88°F, afternoon storms","wind":"Light","seas":[3,5],"swell":"S swell","src":"typical"},
+    {"date":"2026-11-06","place":"Gulf of Papagayo","kind":"sea","img":"wind","note":"Sea day","wx":"~86°F","wind":"NE 15–25","seas":[4,7],"swell":"Wind chop","src":"typical"},
+    {"date":"2026-11-07","place":"Puntarenas, Costa Rica","kind":"port","img":"beach","note":"Arrive 3pm","wx":"~89°F, afternoon showers","wind":"Light","seas":[1,2],"swell":"Calm in the gulf","src":"typical"},
+    {"date":"2026-11-08","place":"Pacific side of Panama","kind":"sea","img":"sea","note":"Sea day","wx":"~85°F, showers and storms","wind":"Light","seas":[3,5],"swell":"S swell","src":"typical"},
+    {"date":"2026-11-09","place":"Panama City","kind":"port","img":"city","note":"Arrive 2pm","wx":"~87°F, PM downpours likely","wind":"Light","seas":[1,2],"swell":"Calm","src":"typical"},
+    {"date":"2026-11-10","place":"Panama Canal","kind":"canal","img":"canal","note":"Transit day","wx":"~86°F, heavy showers possible","wind":"Light","seas":[0,1],"swell":"Flat","src":"typical"},
+    {"date":"2026-11-11","place":"Cartagena, Colombia","kind":"port","img":"cartagena","note":"Sea day, arrive 6pm","wx":"~87°F","wind":"NE 10–20","seas":[4,7],"swell":"Trade-wind seas","src":"typical"},
+    {"date":"2026-11-12","place":"Cartagena, Colombia","kind":"port","img":"cartagena","note":"Overnight · departs 6pm","wx":"88° / 77°, scattered showers","wind":"NE 10–15","seas":[3,5],"swell":"Moderate","src":"typical"},
+    {"date":"2026-11-13","place":"Central Caribbean","kind":"sea","img":"caribbean","note":"Sea day","wx":"~84°F, sun and passing showers","wind":"E/NE 15–20","seas":[5,8],"swell":"Roughest Caribbean day","src":"typical"},
+    {"date":"2026-11-14","place":"Near Cuba / Yucatán Channel","kind":"sea","img":"caribbean","note":"Sea day","wx":"~82°F","wind":"NE 15–20, more if a front","seas":[4,7],"swell":"NE swell","src":"typical"},
+    {"date":"2026-11-15","place":"Miami","kind":"port","img":"miami","note":"Arrive 11:30am","wx":"~80° / 70°","wind":"NE 10–20","seas":[3,6],"swell":"Choppy if a front opposes the Gulf Stream","src":"typical"}
+  ]
+}
+</script>
+
+<script>
+(function () {
+  var data = JSON.parse(document.getElementById('data').textContent);
+  document.getElementById('updated').textContent = data.updated;
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function pic(name, cls) { return '<svg class="' + cls + '" viewBox="0 0 64 64" aria-hidden="true"><use href="#v-' + (name || 'sea') + '"/></svg>'; }
+  var alertsEl = document.getElementById('alerts');
+  (data.alerts || []).forEach(function (a) {
+    var d = document.createElement('div'); d.className = 'alert';
+    d.innerHTML = '<strong>' + esc(a.title) + '.</strong> ' + esc(a.text);
+    alertsEl.appendChild(d);
+  });
+  var now = new Date();
+  var today = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var dows = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  function parse(s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function state(hi) {
+    if (hi < 4) return { cls: '', label: 'Slight' };
+    if (hi < 8) return { cls: 'mod', label: 'Moderate' };
+    return { cls: 'rough', label: 'Rough' };
+  }
+  // Ports-of-call strip (one stop per port, skipping repeat days)
+  var strip = document.getElementById('strip'), seen = {};
+  data.days.forEach(function (d) {
+    if (d.kind === 'sea' || seen[d.place]) return;
+    seen[d.place] = 1;
+    var dt = parse(d.date), li = document.createElement('li');
+    li.innerHTML = pic(d.img, '') + '<span>' + esc(d.place.split(',')[0]) + '</span><small>' + months[dt.getMonth()] + ' ' + dt.getDate() + '</small>';
+    strip.appendChild(li);
+  });
+  var log = document.getElementById('log'), todayEl = null;
+  data.days.forEach(function (d, i) {
+    var dt = parse(d.date);
+    var li = document.createElement('li');
+    var isToday = d.date === today, isPast = d.date < today;
+    li.className = 'day' + (isToday ? ' today' : '') + (isPast ? ' past' : '');
+    var s = state(d.seas[1]);
+    var kindLabel = d.kind === 'sea' ? 'Sea day' : d.kind === 'canal' ? 'Canal' : 'Port';
+    li.innerHTML =
+      '<div class="date"><span class="dnum">DAY ' + (i + 1) + '</span><span class="dd">' + dt.getDate() + '</span><span class="dm">' + dows[dt.getDay()] + ' ' + months[dt.getMonth()] + '</span></div>' +
+      pic(d.img, 'pic') +
+      '<div class="top"><span class="place">' + esc(d.place) + '</span>' +
+        (isToday ? '<span class="chip today">Today</span>' : '<span class="chip ' + (d.kind === 'sea' ? 'sea' : '') + '">' + kindLabel + '</span>') + '</div>' +
+      '<div class="note">' + esc(d.note) + '</div>' +
+      '<div class="stats">' +
+        '<div class="stat wx"><span class="lab">Weather</span><span class="val">' + esc(d.wx) + '</span></div>' +
+        '<div class="stat"><span class="lab">Wind (kt)</span><span class="val">' + esc(d.wind) + '</span></div>' +
+        '<div class="stat"><span class="lab">Seas</span><span class="val">' + d.seas[0] + '–' + d.seas[1] + ' ft · ' + s.label + '</span>' +
+          '<div class="bar"><i class="' + s.cls + '" style="width:' + Math.min(100, Math.round(d.seas[1] / 12 * 100)) + '%"></i></div>' +
+          '<span class="sub">' + esc(d.swell) + '</span></div>' +
+      '</div>' +
+      '<div class="foot"><span class="src ' + (d.src === 'forecast' ? 'fc' : 'ty') + '">' + (d.src === 'forecast' ? '● Forecast' : '○ Typical') + '</span>' +
+        (d.flag ? '<span class="flag">⚠ ' + esc(d.flag) + '</span>' : '') + '</div>';
+    log.appendChild(li);
+    if (isToday) todayEl = li;
+  });
+  var first = data.days[0].date, last = data.days[data.days.length - 1].date;
+  var st = document.getElementById('status');
+  if (today < first) st.textContent = 'Sails Oct 29';
+  else if (today > last) st.textContent = 'Voyage complete';
+  else st.textContent = 'At sea now';
+  if (todayEl) setTimeout(function () { todayEl.scrollIntoView({ block: 'center' }); }, 300);
+})();
+</script>
+
+</html>
