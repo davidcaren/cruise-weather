@@ -114,6 +114,7 @@ ol.log { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .src { font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; }
 .src.fc { color: var(--accent); }
 .src.ty { color: var(--muted); }
+.hot { color: var(--warn); font-weight: 600; }
 .flag { font-size: 12.5px; color: var(--alert); font-weight: 600; }
 .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
 footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
@@ -303,28 +304,34 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
 {
   "updated": "Tue Oct 27, 8:30am PT",
   "alerts": [
-    {"title": "Tropical Storm Vance", "text": "Weakening off southwest Mexico. Should be gone before the ship passes on Nov 2, but leftover swell may make that sea day lumpy."},
-    {"title": "Gulf of Tehuantepec (Nov 4)", "text": "November is peak season for gap-wind gales here. The most likely bumpy day of the trip."}
+      {
+          "title": "Tropical Storm Vance",
+          "text": "Weakening off southwest Mexico. Should be gone before the ship passes on Nov 2, but leftover swell may make that sea day lumpy."
+      },
+      {
+          "title": "Gulf of Tehuantepec (Nov 4)",
+          "text": "November is peak season for gap-wind gales here. The most likely bumpy day of the trip."
+      }
   ],
   "days": [
-    {"date":"2026-10-29","place":"Los Angeles","kind":"port","img":"la","note":"Departs this evening","wx":"Low 70s, partly cloudy","wind":"Light → SW 5–10","seas":[2,3],"swell":"SW 2 ft @ 15s","src":"forecast"},
-    {"date":"2026-10-30","place":"Off northern Baja","kind":"sea","img":"sea","note":"Sea day","wx":"~70°F, slight chance of showers","wind":"W 5–10","seas":[2,4],"swell":"NW swell may build late","src":"forecast"},
-    {"date":"2026-10-31","place":"Off central / southern Baja","kind":"sea","img":"sea","note":"Sea day","wx":"Low 80s, sunny","wind":"NW 10–15","seas":[4,6],"swell":"NW swell","src":"typical"},
-    {"date":"2026-11-01","place":"Cabo San Lucas","kind":"port","img":"cabo","note":"Arrive 3pm · tender port","wx":"87° / 76°, mostly sunny","wind":"Light to moderate","seas":[2,4],"swell":"Watch for S swell","src":"forecast"},
-    {"date":"2026-11-02","place":"Off Puerto Vallarta","kind":"sea","img":"sea","note":"Sea day","wx":"~86°F, a few showers","wind":"Moderate","seas":[4,7],"swell":"Leftover SW swell from Vance","src":"typical","flag":"Post-storm swell"},
-    {"date":"2026-11-03","place":"Off Acapulco","kind":"sea","img":"sea","note":"Sea day","wx":"~88°F, humid, showers possible","wind":"Light to moderate","seas":[4,6],"swell":"S swell","src":"typical"},
-    {"date":"2026-11-04","place":"Gulf of Tehuantepec","kind":"sea","img":"wind","note":"Sea day","wx":"~85°F","wind":"N 20–35 possible","seas":[6,12],"swell":"If gap winds blow","src":"typical","flag":"Gale risk"},
-    {"date":"2026-11-05","place":"Puerto Quetzal, Guatemala","kind":"port","img":"volcano","note":"Arrive 2pm","wx":"~88°F, afternoon storms","wind":"Light","seas":[3,5],"swell":"S swell","src":"typical"},
-    {"date":"2026-11-06","place":"Gulf of Papagayo","kind":"sea","img":"wind","note":"Sea day","wx":"~86°F","wind":"NE 15–25","seas":[4,7],"swell":"Wind chop","src":"typical"},
-    {"date":"2026-11-07","place":"Puntarenas, Costa Rica","kind":"port","img":"beach","note":"Arrive 3pm","wx":"~89°F, afternoon showers","wind":"Light","seas":[1,2],"swell":"Calm in the gulf","src":"typical"},
-    {"date":"2026-11-08","place":"Pacific side of Panama","kind":"sea","img":"sea","note":"Sea day","wx":"~85°F, showers and storms","wind":"Light","seas":[3,5],"swell":"S swell","src":"typical"},
-    {"date":"2026-11-09","place":"Panama City","kind":"port","img":"city","note":"Arrive 2pm","wx":"~87°F, PM downpours likely","wind":"Light","seas":[1,2],"swell":"Calm","src":"typical"},
-    {"date":"2026-11-10","place":"Panama Canal","kind":"canal","img":"canal","note":"Transit day","wx":"~86°F, heavy showers possible","wind":"Light","seas":[0,1],"swell":"Flat","src":"typical"},
-    {"date":"2026-11-11","place":"Cartagena, Colombia","kind":"port","img":"cartagena","note":"Sea day, arrive 6pm","wx":"~87°F","wind":"NE 10–20","seas":[4,7],"swell":"Trade-wind seas","src":"typical"},
-    {"date":"2026-11-12","place":"Cartagena, Colombia","kind":"port","img":"cartagena","note":"Overnight · departs 6pm","wx":"88° / 77°, scattered showers","wind":"NE 10–15","seas":[3,5],"swell":"Moderate","src":"typical"},
-    {"date":"2026-11-13","place":"Central Caribbean","kind":"sea","img":"caribbean","note":"Sea day","wx":"~84°F, sun and passing showers","wind":"E/NE 15–20","seas":[5,8],"swell":"Roughest Caribbean day","src":"typical"},
-    {"date":"2026-11-14","place":"Near Cuba / Yucatán Channel","kind":"sea","img":"caribbean","note":"Sea day","wx":"~82°F","wind":"NE 15–20, more if a front","seas":[4,7],"swell":"NE swell","src":"typical"},
-    {"date":"2026-11-15","place":"Miami","kind":"port","img":"miami","note":"Arrive 11:30am","wx":"~80° / 70°","wind":"NE 10–20","seas":[3,6],"swell":"Choppy if a front opposes the Gulf Stream","src":"typical"}
+    {"date": "2026-10-29", "place": "Los Angeles", "kind": "port", "img": "la", "note": "Departs this evening", "wx": "Low 70s, partly cloudy", "wind": "Light → SW 5–10", "seas": [2, 3], "swell": "SW 2 ft @ 15s", "src": "forecast", "hum": 65, "feels": 72},
+    {"date": "2026-10-30", "place": "Off northern Baja", "kind": "sea", "img": "sea", "note": "Sea day", "wx": "~70°F, slight chance of showers", "wind": "W 5–10", "seas": [2, 4], "swell": "NW swell may build late", "src": "forecast", "hum": 75, "feels": 70},
+    {"date": "2026-10-31", "place": "Off central / southern Baja", "kind": "sea", "img": "sea", "note": "Sea day", "wx": "Low 80s, sunny", "wind": "NW 10–15", "seas": [4, 6], "swell": "NW swell", "src": "typical", "hum": 65, "feels": 85},
+    {"date": "2026-11-01", "place": "Cabo San Lucas", "kind": "port", "img": "cabo", "note": "Arrive 3pm · tender port", "wx": "87° / 76°, mostly sunny", "wind": "Light to moderate", "seas": [2, 4], "swell": "Watch for S swell", "src": "forecast", "hum": 60, "feels": 93},
+    {"date": "2026-11-02", "place": "Off Puerto Vallarta", "kind": "sea", "img": "sea", "note": "Sea day", "wx": "~86°F, a few showers", "wind": "Moderate", "seas": [4, 7], "swell": "Leftover SW swell from Vance", "src": "typical", "flag": "Post-storm swell", "hum": 75, "feels": 97},
+    {"date": "2026-11-03", "place": "Off Acapulco", "kind": "sea", "img": "sea", "note": "Sea day", "wx": "~88°F, humid, showers possible", "wind": "Light to moderate", "seas": [4, 6], "swell": "S swell", "src": "typical", "hum": 75, "feels": 103},
+    {"date": "2026-11-04", "place": "Gulf of Tehuantepec", "kind": "sea", "img": "wind", "note": "Sea day", "wx": "~85°F", "wind": "N 20–35 possible", "seas": [6, 12], "swell": "If gap winds blow", "src": "typical", "flag": "Gale risk", "hum": 70, "feels": 93},
+    {"date": "2026-11-05", "place": "Puerto Quetzal, Guatemala", "kind": "port", "img": "volcano", "note": "Arrive 2pm", "wx": "~88°F, afternoon storms", "wind": "Light", "seas": [3, 5], "swell": "S swell", "src": "typical", "hum": 75, "feels": 103},
+    {"date": "2026-11-06", "place": "Gulf of Papagayo", "kind": "sea", "img": "wind", "note": "Sea day", "wx": "~86°F", "wind": "NE 15–25", "seas": [4, 7], "swell": "Wind chop", "src": "typical", "hum": 75, "feels": 97},
+    {"date": "2026-11-07", "place": "Puntarenas, Costa Rica", "kind": "port", "img": "beach", "note": "Arrive 3pm", "wx": "~89°F, afternoon showers", "wind": "Light", "seas": [1, 2], "swell": "Calm in the gulf", "src": "typical", "hum": 75, "feels": 106},
+    {"date": "2026-11-08", "place": "Pacific side of Panama", "kind": "sea", "img": "sea", "note": "Sea day", "wx": "~85°F, showers and storms", "wind": "Light", "seas": [3, 5], "swell": "S swell", "src": "typical", "hum": 80, "feels": 97},
+    {"date": "2026-11-09", "place": "Panama City", "kind": "port", "img": "city", "note": "Arrive 2pm", "wx": "~87°F, PM downpours likely", "wind": "Light", "seas": [1, 2], "swell": "Calm", "src": "typical", "hum": 80, "feels": 103},
+    {"date": "2026-11-10", "place": "Panama Canal", "kind": "canal", "img": "canal", "note": "Transit day", "wx": "~86°F, heavy showers possible", "wind": "Light", "seas": [0, 1], "swell": "Flat", "src": "typical", "hum": 80, "feels": 100},
+    {"date": "2026-11-11", "place": "Cartagena, Colombia", "kind": "port", "img": "cartagena", "note": "Sea day, arrive 6pm", "wx": "~87°F", "wind": "NE 10–20", "seas": [4, 7], "swell": "Trade-wind seas", "src": "typical", "hum": 75, "feels": 100},
+    {"date": "2026-11-12", "place": "Cartagena, Colombia", "kind": "port", "img": "cartagena", "note": "Overnight · departs 6pm", "wx": "88° / 77°, scattered showers", "wind": "NE 10–15", "seas": [3, 5], "swell": "Moderate", "src": "typical", "hum": 75, "feels": 103},
+    {"date": "2026-11-13", "place": "Central Caribbean", "kind": "sea", "img": "caribbean", "note": "Sea day", "wx": "~84°F, sun and passing showers", "wind": "E/NE 15–20", "seas": [5, 8], "swell": "Roughest Caribbean day", "src": "typical", "hum": 75, "feels": 92},
+    {"date": "2026-11-14", "place": "Near Cuba / Yucatán Channel", "kind": "sea", "img": "caribbean", "note": "Sea day", "wx": "~82°F", "wind": "NE 15–20, more if a front", "seas": [4, 7], "swell": "NE swell", "src": "typical", "hum": 70, "feels": 86},
+    {"date": "2026-11-15", "place": "Miami", "kind": "port", "img": "miami", "note": "Arrive 11:30am", "wx": "~80° / 70°", "wind": "NE 10–20", "seas": [3, 6], "swell": "Choppy if a front opposes the Gulf Stream", "src": "typical", "hum": 65, "feels": 82}
   ]
 }
 </script>
@@ -375,7 +382,8 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
         (isToday ? '<span class="chip today">Today</span>' : '<span class="chip ' + (d.kind === 'sea' ? 'sea' : '') + '">' + kindLabel + '</span>') + '</div>' +
       '<div class="note">' + esc(d.note) + '</div>' +
       '<div class="stats">' +
-        '<div class="stat wx"><span class="lab">Weather</span><span class="val">' + esc(d.wx) + '</span></div>' +
+        '<div class="stat wx"><span class="lab">Weather</span><span class="val">' + esc(d.wx) + '</span>' +
+          ((d.feels || d.hum) ? '<span class="sub">' + (d.feels ? '<span class="' + (d.feels >= 100 ? 'hot' : '') + '">Feels like ' + d.feels + '°F</span>' : '') + (d.feels && d.hum ? ' · ' : '') + (d.hum ? '💧 ' + d.hum + '% humidity' : '') + '</span>' : '') + '</div>' +
         '<div class="stat"><span class="lab">Wind (kt)</span><span class="val">' + esc(d.wind) + '</span></div>' +
         '<div class="stat"><span class="lab">Seas</span><span class="val">' + d.seas[0] + '–' + d.seas[1] + ' ft · ' + s.label + '</span>' +
           '<div class="bar"><i class="' + s.cls + '" style="width:' + Math.min(100, Math.round(d.seas[1] / 12 * 100)) + '%"></i></div>' +
