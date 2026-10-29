@@ -55,7 +55,9 @@ body { background: var(--bg); color: var(--ink); font-family: var(--body); font-
 .wrap { max-width: 760px; margin: 0 auto; padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 22px; }
 
 .hero { border-radius: 14px; overflow: hidden; position: relative; background: var(--sea2); }
-.hero svg { display: block; width: 100%; height: auto; }
+.hero { margin: 0; }
+.hero img { display: block; width: 100%; height: auto; aspect-ratio: 5 / 2; object-fit: cover; object-position: center 60%; }
+.hero figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 12px 8px; font-size: 11.5px; color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.55)); text-shadow: 0 1px 2px rgba(0,0,0,.4); }
 .waves1, .waves2 { animation: drift 14s linear infinite; }
 .waves2 { animation-duration: 22s; animation-direction: reverse; }
 .shipbob { animation: bob 6s ease-in-out infinite; transform-origin: 420px 190px; }
@@ -143,6 +145,7 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
 .s-hull { stroke: var(--hull); } .s-ink { stroke: var(--hullline); } .s-sea { stroke: var(--sea1); } .s-land { stroke: var(--land); } .s-acc { stroke: var(--accent); }
 
 @media (max-width: 520px) {
+  .hero img { aspect-ratio: 2 / 1; }
   .date { grid-column: 1; grid-row: 1; display: flex; align-items: baseline; gap: 8px; }
   .side { grid-column: 2; grid-row: 1 / span 3; grid-template-columns: 60px 60px; }
   .side .pic, .side .map { width: 60px; height: 60px; }
@@ -258,50 +261,16 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
 </svg>
 
 <div class="wrap">
-  <div class="hero" role="img" aria-label="Illustration of a cruise ship sailing at sunset">
-    <svg viewBox="0 0 800 280" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" style="stop-color:var(--sky3)"/>
-          <stop offset=".55" style="stop-color:var(--sky2)"/>
-          <stop offset="1" style="stop-color:var(--sky1)"/>
-        </linearGradient>
-      </defs>
-      <rect width="800" height="200" fill="url(#sky)"/>
-      <circle cx="610" cy="176" r="46" class="f-sun"/>
-      <path d="M520 196 Q560 186 600 194 T690 192" class="s-hull" stroke-width="2" fill="none" opacity=".35"/>
-      <g fill="none" class="s-ink" stroke-width="2" opacity=".35" stroke-linecap="round">
-        <path d="M120 70 q6 -6 12 0 q6 -6 12 0"/><path d="M165 52 q4 -4 8 0 q4 -4 8 0"/>
-      </g>
-      <rect y="194" width="800" height="86" class="f-sea"/>
-      <g class="shipbob">
-        <path d="M188 166 L640 166 Q632 184 612 202 L228 202 Q204 188 188 166Z" class="f-hull"/>
-        <path d="M200 182 L630 182" class="s-ink" stroke-width="2"/>
-        <path d="M222 196 L616 196" class="s-acc" stroke-width="4"/>
-        <rect x="232" y="146" width="380" height="20" rx="3" class="f-hull"/>
-        <rect x="250" y="128" width="346" height="18" rx="3" class="f-hull"/>
-        <rect x="270" y="110" width="310" height="18" rx="3" class="f-hull"/>
-        <rect x="298" y="93" width="262" height="17" rx="3" class="f-hull"/>
-        <path d="M520 93 L560 93 L566 76 L524 80Z" class="f-hull"/>
-        <rect x="380" y="78" width="96" height="15" rx="6" class="f-hull"/>
-        <path d="M240 156 H604 M258 137 H588 M278 119 H572 M306 101 H552" class="s-ink" stroke-width="5" stroke-dasharray="7 4" opacity=".75"/>
-        <path d="M528 84 L562 82" class="f-glass s-ink" stroke-width="4"/>
-        <path d="M430 78 L430 58 M422 66 L438 66" class="s-ink" stroke-width="2.5"/>
-      </g>
-      <g class="waves2" opacity=".55">
-        <path d="M0 214 q25 -8 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V280 H0Z" class="f-sea2"/>
-      </g>
-      <g class="waves1">
-        <path d="M0 240 q25 -9 50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 t50 0 V280 H0Z" style="fill:var(--sea3)"/>
-      </g>
-    </svg>
-  </div>
+  <figure class="hero">
+    <img src="ship.jpg" width="1600" height="640" alt="Brilliant Lady docked at the San Pedro cruise terminal at dawn, the red Virgin funnel glowing under a cloudy sky">
+    <figcaption>Boarding day in San Pedro · Photo by a fellow sailor</figcaption>
+  </figure>
 
   <header>
     <div class="eyebrow">Virgin Voyages · Brilliant Lady</div>
     <h1>Voyage Weather</h1>
     <div class="route">Los Angeles → Panama Canal → Miami · Oct 29 – Nov 15, 2026</div>
-    <div class="meta"><span>Updated <b id="updated"></b></span><span id="status"></span><a class="shiplink" href="https://media.cntraveler.com/photos/68e0233664b87ce0e5ef7843/16:9/w_2560,c_limit/brilliant%20lady-virgin%20voyages-DJI_0693%20(1).JPG" target="_blank" rel="noopener">📷 See a photo of the ship</a></div>
+    <div class="meta"><span>Updated <b id="updated"></b></span><span id="status"></span></div>
   </header>
 
   <nav class="strip" aria-label="Ports of call"><ol id="strip"></ol></nav>
