@@ -138,6 +138,17 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
 @keyframes pulse { from { transform: scale(.5); opacity: .5 } to { transform: scale(1.4); opacity: 0 } }
 @media (prefers-reduced-motion: reduce) { .m-pulse { animation: none; } }
 .foot { grid-column: 2; }
+.live { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 10px; }
+.live-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.live h2 { margin: 0; font-family: var(--display); font-stretch: 85%; font-weight: 700; font-size: 19px; }
+.live-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--map-dot); }
+.live-badge i { width: 8px; height: 8px; border-radius: 50%; background: var(--map-dot); animation: blink 1.6s ease-in-out infinite; }
+@keyframes blink { 50% { opacity: .25 } }
+@media (prefers-reduced-motion: reduce) { .live-badge i { animation: none; } }
+.live-map { border-radius: 8px; overflow: hidden; min-height: 300px; background: var(--map-sea); }
+.live-map iframe { display: block; width: 100%; border: 0; }
+.live-note { margin: 0; font-size: 12.5px; color: var(--muted); }
+.live-note a { color: var(--accent); font-weight: 600; }
 /* illustration fills */
 .f-sky { fill: var(--tile-sky); } .f-tile { fill: var(--tile); } .f-sea { fill: var(--sea1); } .f-sea2 { fill: var(--sea2); }
 .f-land { fill: var(--land); } .f-rock { fill: var(--rock); } .f-sand { fill: var(--sand); } .f-sun { fill: var(--sun); }
@@ -265,6 +276,23 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
     <img src="ship.jpg" width="1600" height="640" alt="Brilliant Lady docked at the San Pedro cruise terminal at dawn, the red Virgin funnel glowing under a cloudy sky">
     <figcaption>Boarding day in San Pedro · Photo by John from our WhatsApp crew</figcaption>
   </figure>
+
+  <section class="live" aria-labelledby="live-h">
+    <div class="live-head">
+      <h2 id="live-h">Where's the ship right now?</h2>
+      <span class="live-badge"><i></i>Live AIS</span>
+    </div>
+    <div class="live-map">
+      <script>
+        var width = "100%"; var height = "300"; var names = true;
+        var mmsi = "311001167"; var show_track = true;
+      </script>
+      <script src="https://www.vesselfinder.com/aismap.js"></script>
+    </div>
+    <p class="live-note">Ship positions come from the ship's AIS transponder. Far offshore the signal can lag by a few hours.
+      Track it on <a href="https://www.cruisemapper.com/ships/Brilliant-Lady-1979" target="_blank" rel="noopener">CruiseMapper</a>
+      or <a href="https://www.vesselfinder.com/vessels/details/9870654" target="_blank" rel="noopener">VesselFinder</a>.</p>
+  </section>
 
   <header>
     <div class="eyebrow">Virgin Voyages · Brilliant Lady</div>
