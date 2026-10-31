@@ -146,8 +146,11 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
 .live-badge i { width: 8px; height: 8px; border-radius: 50%; background: var(--map-dot); animation: blink 1.6s ease-in-out infinite; }
 @keyframes blink { 50% { opacity: .25 } }
 @media (prefers-reduced-motion: reduce) { .live-badge i { animation: none; } }
-.live-map { border-radius: 8px; overflow: hidden; min-height: 300px; background: var(--map-sea); }
-.live-map iframe { display: block; width: 100%; border: 0; }
+.live-status { margin: 0; font-size: 15px; line-height: 1.4; }
+.live-status b { font-weight: 600; }
+.live-status small { display: block; margin-top: 2px; font-size: 12.5px; color: var(--muted); }
+.live-btn { justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 999px; background: var(--accent); color: var(--surface); font-weight: 600; text-decoration: none; }
+.live-btn:hover, .live-btn:focus-visible { filter: brightness(1.08); outline: 2px solid var(--accent); outline-offset: 2px; }
 .live-note { margin: 0; font-size: 12.5px; color: var(--muted); }
 .live-note a { color: var(--accent); font-weight: 600; }
 /* illustration fills */
@@ -283,16 +286,9 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
       <h2 id="live-h">Where's the ship right now?</h2>
       <span class="live-badge"><i></i>Live AIS</span>
     </div>
-    <div class="live-map">
-      <script>
-        var width = "100%"; var height = "300"; var names = true;
-        var mmsi = "311001167"; var show_track = true;
-      </script>
-      <script src="https://www.vesselfinder.com/aismap.js"></script>
-    </div>
-    <p class="live-note">Ship positions come from the ship's AIS transponder. Far offshore the signal can lag by a few hours.
-      Track it on <a href="https://www.cruisemapper.com/ships/Brilliant-Lady-1979" target="_blank" rel="noopener">CruiseMapper</a>
-      or <a href="https://www.vesselfinder.com/vessels/details/9870654" target="_blank" rel="noopener">VesselFinder</a>.</p>
+    <p class="live-status" id="live-status"></p>
+    <a class="live-btn" href="https://www.cruisemapper.com/?imo=9870654" target="_blank" rel="noopener">Open live map on CruiseMapper ↗</a>
+    <p class="live-note">Position from CruiseMapper, checked every 6 hours. Tap the button for the up-to-the-minute map.</p>
   </section>
 
   <header>
@@ -323,6 +319,7 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
 <script id="data" type="application/json">
 {
   "updated": "Sat Oct 31, 2:35am PT",
+  "live": {"text": "Cruising at 11.1 knots (13 mph) off the North America west coast, en route to Cabo San Lucas", "asof": "Sat Oct 31, 6:00am PT"},
   "alerts": [
       {
           "title": "All clear in the tropics",
@@ -364,6 +361,9 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
 (function () {
   var data = JSON.parse(document.getElementById('data').textContent);
   document.getElementById('updated').textContent = data.updated;
+  var ls = document.getElementById('live-status');
+  if (ls && data.live && data.live.text) { ls.innerHTML = '<b>' + esc(data.live.text) + '</b><small>Last checked ' + esc(data.live.asof || '') + '</small>'; }
+  else if (ls) { ls.textContent = 'Tap below for the ship\u2019s live position.'; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function pic(name, cls) { return '<svg class="' + cls + '" viewBox="0 0 64 64" aria-hidden="true"><use href="#v-' + (name || 'sea') + '"/></svg>'; }
   var alertsEl = document.getElementById('alerts');
