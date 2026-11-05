@@ -319,24 +319,20 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
 
 <script id="data" type="application/json">
 {
-  "updated": "Thu Nov 5, 7:00am ship time",
+  "updated": "Thu Nov 5, 11:00am ship time",
   "live": {"text": "No usable AIS fix lately (the ship is beyond shore receivers). Planned today: arriving Puerto Quetzal, Guatemala at 2pm", "asof": "Last reported Mon Nov 2, 10:34pm ship time, no position given"},
   "alerts": [
+      {
+          "title": "Possible tropical depression off Central America (Nov 6–8)",
+          "text": "NHC is watching a broad low offshore of Central America, giving it a 40% chance of forming in 2 days and 60% in 7 days. It's drifting slowly north, and a tropical depression could form by the weekend. Expect lots of showers and storms, and seas of 5–7 ft through Papagayo on Friday, settling to 4–6 ft by Puntarenas and 3–5 ft near Panama. Watch for ship announcements."
+      },
       {
           "title": "Tropics: nothing near our route",
           "text": "No active storms. NHC gives a low forming south of Bermuda a 20% chance in 2 days and 40% in 7 days. It's expected to drift and then turn east or northeast, with no threat to the US. We'll keep watching it ahead of the Caribbean leg."
       },
       {
-          "title": "Gulf of Papagayo (Nov 6): looking calm",
-          "text": "No gap-wind event in the forecast. Friday looks like W–NW winds around 10 kt and 4–6 ft seas, easing overnight."
-      },
-      {
           "title": "Gulf of Tehuantepec (Nov 4): calm by the time we pass",
           "text": "A gale warning is up there tonight (25–30 kt, 7–10 ft seas), but winds ease Monday night and the forecast for Wednesday, when we cross, is light winds and 3–6 ft seas."
-      },
-      {
-          "title": "Showery low off Guatemala (through Wed night)",
-          "text": "A weak low near 8.5°N 89.5°W, off El Salvador/Guatemala, brings showers and thunderstorms through Wednesday night, then drifts north and weakens. Seas off Papagayo and Costa Rica settle to 3–6 ft by Friday and Saturday."
       }
   ],
   "days": [
@@ -348,10 +344,10 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; }
     {"date": "2026-11-03", "place": "Off Acapulco", "kind": "sea", "img": "sea", "note": "Sea day", "hi": 84, "lo": 77, "wx": "Partly cloudy, storms likely tonight", "cloud": 45, "wind": "NW–W ~10", "seas": [3, 6], "swell": "SW swell", "src": "forecast", "hum": 80, "feels": 94, "lat": 16.5, "lon": -100.5, "tz": -6},
     {"date": "2026-11-04", "place": "Gulf of Tehuantepec", "kind": "sea", "img": "wind", "note": "Sea day", "hi": 85, "lo": 76, "wx": "Mostly sunny, a few showers", "cloud": 30, "wind": "NW ~10", "seas": [4, 6], "swell": "S–SW swell, a few showers", "src": "forecast", "hum": 70, "feels": 93, "lat": 14.8, "lon": -95.5, "tz": -6},
     {"date": "2026-11-05", "place": "Puerto Quetzal, Guatemala", "kind": "port", "img": "volcano", "note": "Arrive 2pm", "hi": 88, "lo": 73, "wx": "Mostly cloudy, afternoon storms likely", "cloud": 70, "wind": "W–NW ~10", "seas": [4, 6], "swell": "SW swell", "src": "forecast", "hum": 82, "feels": 108, "lat": 13.92, "lon": -90.78, "tz": -6},
-    {"date": "2026-11-06", "place": "Gulf of Papagayo", "kind": "sea", "img": "wind", "note": "Sea day", "hi": 86, "lo": 76, "wx": "Partly cloudy, breezy", "cloud": 40, "wind": "W–NW ~10, light at night", "seas": [4, 6], "swell": "S–SW swell", "src": "forecast", "hum": 75, "feels": 97, "lat": 11.5, "lon": -87.5, "tz": -6},
-    {"date": "2026-11-07", "place": "Puntarenas, Costa Rica", "kind": "port", "img": "beach", "note": "Arrive 3pm", "hi": 80, "lo": 76, "wx": "Cloudy with likely rain and storms", "cloud": 90, "wind": "SW–W ~10", "seas": [3, 5], "swell": "Settling SW swell", "src": "forecast", "hum": 92, "feels": 86, "lat": 9.97, "lon": -84.83, "tz": -6},
-    {"date": "2026-11-08", "place": "Pacific side of Panama", "kind": "sea", "img": "sea", "note": "Sea day", "hi": 85, "lo": 76, "wx": "Showers and storms", "cloud": 75, "wind": "Light", "seas": [3, 5], "swell": "S swell", "src": "typical", "hum": 80, "feels": 97, "lat": 7.5, "lon": -81.5, "tz": -5},
-    {"date": "2026-11-09", "place": "Panama City", "kind": "port", "img": "city", "note": "Arrive 2pm", "hi": 87, "lo": 76, "wx": "PM downpours likely", "cloud": 70, "wind": "Light", "seas": [1, 2], "swell": "Calm", "src": "typical", "hum": 80, "feels": 103, "lat": 8.92, "lon": -79.53, "tz": -5},
+    {"date": "2026-11-06", "place": "Gulf of Papagayo", "kind": "sea", "img": "wind", "note": "Sea day", "hi": 86, "lo": 76, "wx": "Cloudy, numerous showers and storms", "cloud": 85, "wind": "SW 10–15", "seas": [5, 7], "swell": "S–SW swell", "src": "forecast", "hum": 75, "feels": 97, "lat": 11.5, "lon": -87.5, "tz": -6, "flag": "Possible tropical depression nearby"},
+    {"date": "2026-11-07", "place": "Puntarenas, Costa Rica", "kind": "port", "img": "beach", "note": "Arrive 3pm", "hi": 80, "lo": 76, "wx": "Cloudy with likely rain and storms", "cloud": 90, "wind": "SW 10–15", "seas": [4, 6], "swell": "S–SW swell", "src": "forecast", "hum": 92, "feels": 86, "lat": 9.97, "lon": -84.83, "tz": -6, "flag": "Possible tropical depression nearby"},
+    {"date": "2026-11-08", "place": "Pacific side of Panama", "kind": "sea", "img": "sea", "note": "Sea day", "hi": 85, "lo": 76, "wx": "Showers and storms", "cloud": 75, "wind": "S–SW ~10, light at night", "seas": [3, 5], "swell": "S–SW swell", "src": "forecast", "hum": 80, "feels": 97, "lat": 7.5, "lon": -81.5, "tz": -5},
+    {"date": "2026-11-09", "place": "Panama City", "kind": "port", "img": "city", "note": "Arrive 2pm", "hi": 87, "lo": 76, "wx": "PM downpours likely", "cloud": 70, "wind": "N ~10 in Gulf of Panama", "seas": [3, 5], "swell": "S–SW swell", "src": "forecast", "hum": 80, "feels": 103, "lat": 8.92, "lon": -79.53, "tz": -5},
     {"date": "2026-11-10", "place": "Panama Canal", "kind": "canal", "img": "canal", "note": "Transit day", "hi": 86, "lo": 75, "wx": "Heavy showers possible", "cloud": 75, "wind": "Light", "seas": [0, 1], "swell": "Flat", "src": "typical", "hum": 80, "feels": 100, "lat": 9.15, "lon": -79.7, "tz": -5},
     {"date": "2026-11-11", "place": "Cartagena, Colombia", "kind": "port", "img": "cartagena", "note": "Sea day, arrive 6pm", "hi": 87, "lo": 78, "wx": "Partly cloudy", "cloud": 45, "wind": "NE 10–20", "seas": [4, 7], "swell": "Trade-wind seas", "src": "typical", "hum": 75, "feels": 100, "lat": 10.4, "lon": -75.55, "tz": -5},
     {"date": "2026-11-12", "place": "Cartagena, Colombia", "kind": "port", "img": "cartagena", "note": "Overnight · departs 6pm", "hi": 88, "lo": 77, "wx": "Scattered showers", "cloud": 50, "wind": "NE 10–15", "seas": [3, 5], "swell": "Moderate", "src": "typical", "hum": 75, "feels": 103, "lat": 10.4, "lon": -75.55, "tz": -5},
